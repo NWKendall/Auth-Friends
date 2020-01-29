@@ -1,25 +1,41 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react';
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 
-function Login(props) {
+const Login = () => {
 
   const [loginForm, setLoginForm] = useState({
     credentials: {
       username: "",
       password: ""
     }
-  })
+  });
 
   const handleChanges = e => {
     setLoginForm({
       ...loginForm,
-      [e.target.name]: e.target.value
-    })
+      credentials: {
+        ...loginForm.credentials,
+        [e.target.name]: e.target.value
+      }      
+    });
+  };
+
+  const login = e => {
+    e.preventDefault();
+    axiosWithAuth()
+      .post("/api/login", loginForm.credentials)
+      .then(res => {
+        console.log(`this is from login`, res)
+        localStorage.setItem("token", res.data.payload)        
+      })
+      .catch(err => {
+        console.log(`this is failed login`, err)
+      })
   }
 
   return (
     <div>
-      <form onSubmit={""}>
+      <form onSubmit={() => login}>
         <input
           type="text"
           name="username"
@@ -37,8 +53,6 @@ function Login(props) {
     </div>
   )
 }
-
-
 
 export default Login
 
