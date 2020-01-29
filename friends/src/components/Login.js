@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { withRouter } from "react-router-dom";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
-const Login = () => {
+const Login = props => {
 
   const [loginForm, setLoginForm] = useState({
     credentials: {
@@ -14,7 +15,6 @@ const Login = () => {
     setLoginForm({
       ...loginForm,
       credentials: {
-        ...loginForm.credentials,
         [e.target.name]: e.target.value
       }      
     });
@@ -26,7 +26,8 @@ const Login = () => {
       .post("/api/login", loginForm.credentials)
       .then(res => {
         console.log(`this is from login`, res)
-        localStorage.setItem("token", res.data.payload)        
+        localStorage.setItem("token", res.data.payload);
+        props.history.push("/protected")
       })
       .catch(err => {
         console.log(`this is failed login`, err)
@@ -54,5 +55,5 @@ const Login = () => {
   )
 }
 
-export default Login
+export default withRouter(Login);
 

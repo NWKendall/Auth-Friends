@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import  { axiosWithAuth } from "../utils/axiosWithAuth";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 function FriendsList(props) {
 
@@ -24,6 +24,7 @@ function FriendsList(props) {
 
   return (
     <div>
+      kg
       {friends.friendsList.map((friend, i) => (
         <h2 index={i}>{friend.name}</h2>
       ))}
