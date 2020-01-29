@@ -1,29 +1,26 @@
 import React, { useState } from 'react';
-import { withRouter } from "react-router-dom";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
+import axios from "axios";
 
 const Login = props => {
 
   const [loginForm, setLoginForm] = useState({
-    credentials: {
       username: "",
       password: ""
-    }
   });
 
   const handleChanges = e => {
     setLoginForm({
-      ...loginForm,
-      credentials: {
-        [e.target.name]: e.target.value
-      }      
-    });
+      ...loginForm,      
+      [e.target.name]: e.target.value
+      })      
+    
   };
 
-  const login = e => {
+  const handleLogin = e => {
     e.preventDefault();
-    axiosWithAuth()
-      .post("/api/login", loginForm.credentials)
+    axios
+      .post("http://localhost:5000/api/login", loginForm)
       .then(res => {
         console.log(`this is from login`, res)
         localStorage.setItem("token", res.data.payload);
@@ -36,24 +33,24 @@ const Login = props => {
 
   return (
     <div>
-      <form onSubmit={() => login}>
+      <form onSubmit={handleLogin}>
         <input
           type="text"
           name="username"
-          value={loginForm.credentials.username}
+          value={loginForm.username}
           onChange={handleChanges}
         />
         <input
           type="password"
           name="password"
-          value={loginForm.credentials.password}
+          value={loginForm.password}
           onChange={handleChanges}
         />
-        <button>Login</button>
+        <button onSubmit={handleLogin}>Login</button>
       </form>
     </div>
   )
 }
 
-export default withRouter(Login);
+export default Login;
 

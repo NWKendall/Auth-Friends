@@ -19,7 +19,7 @@ function App() {
           </li>
         </ul>
         <Switch>
-          <PrivateRoute path="/protected" component={FriendsList} />
+          <PrivateRoute exact path="/protected" component={FriendsList} />
           <Route path="/login" component={Login} />
           <Route component={Login} />
         </Switch>

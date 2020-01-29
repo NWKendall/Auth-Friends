@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { axiosWithAuth } from "../utils/axiosWithAuth";
+import Friend from "./Friend";
+import AddFriend from './AddFriend';
 
-function FriendsList(props) {
+
+const FriendsList = () => {
 
   const [friends, setFriends] = useState({    
     friendsList: []    
@@ -20,13 +23,17 @@ function FriendsList(props) {
         console.log(`this is error FriendsList`, err)
       })
 
-  }, [friends])
+  }, [])
 
   return (
     <div>
-      kg
-      {friends.friendsList.map((friend, i) => (
-        <h2 index={i}>{friend.name}</h2>
+      <AddFriend />
+      <h2>Your FriendsList</h2>
+      {friends.friendsList.map(friend => (
+        <Friend 
+          index={friend.id} 
+          friend={friend}
+        />
       ))}
     </div>
   )
